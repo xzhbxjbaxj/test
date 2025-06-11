@@ -26,7 +26,7 @@ jobs:
         env:
           FC_USERNAME: ${{ secrets.FC_USERNAME }}
           FC_PASSWORD: ${{ secrets.FC_PASSWORD }}
-          FC_MACHINE_ID: ${{ secrets.FC_MACHINE_ID }}
+          FC_PORT: ${{ secrets.FC_PORT }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN}}
           TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
           FC_ACCOUNTS: ${{secrets.FC_ACCOUNTS}}
