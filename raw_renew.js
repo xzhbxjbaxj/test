@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 
-const ACCOUNTS=process.env.FC_ACCOUNTS
+const ACCOUNTS=JSON.parse(process.env.FC_ACCOUNTS ||"[]")
 const TG_BOT_TOKEN = process.env.TG_BOT_TOKEN;
 const TG_CHAT_ID = process.env.TG_CHAT_ID;
 
