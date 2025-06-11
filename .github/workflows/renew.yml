@@ -1,0 +1,32 @@
+name: 续费
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 */4 * *"
+
+jobs:
+  renew:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm install 
+
+      - name: Run JS Renew Script
+        run: node raw_renew.js
+        env:
+          FC_USERNAME: ${{ secrets.FC_USERNAME }}
+          FC_PASSWORD: ${{ secrets.FC_PASSWORD }}
+          FC_MACHINE_ID: ${{ secrets.FC_MACHINE_ID }}
+          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN}}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+          FC_ACCOUNTS: ${{secrets.FC_ACCOUNTS}}
