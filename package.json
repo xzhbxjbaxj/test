@@ -1,15 +1,11 @@
+
 {
-  "name": "freecloud-renew",
-  "version": "1.0.0",
-  "description": "自动登录 FreeCloud 并进行续期",
-  "main": "raw_renew.js",
-  "scripts": {
-    "start": "node raw_renew.js"
-  },
+  "type": "module",
   "dependencies": {
-    "axios": "^1.6.8",
-    "jsdom": "^24.0.0"
-  },
-  "author": "你的名字",
-  "license": "MIT"
+    "dotenv": "^16.0.0",
+    "node-fetch": "^3.0.0"
+  }
 }
+
+
+
