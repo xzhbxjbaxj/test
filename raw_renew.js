@@ -2,14 +2,10 @@ import fetch from "node-fetch";
 import dotenv from "dotenv";
 dotenv.config();
 
-let ACCOUNTS = JSON.parse(process.env.FC_ACCOUNTS || "[]");
+const ACCOUNTS = JSON.parse(process.env.FC_ACCOUNTS || "[]");
 const TG_BOT_TOKEN = process.env.TG_BOT_TOKEN;
 const TG_CHAT_ID = process.env.TG_CHAT_ID;
- ACCOUNTS=[{
-    "username":'123@gmail.com',
-    "password":'dvdsv',
-    "port":[123]
- }]
+
  
 if (!ACCOUNTS.length) {
   console.error("❌ 未配置 FC_ACCOUNTS 环境变量或内容为空");
