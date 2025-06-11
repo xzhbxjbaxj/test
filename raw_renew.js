@@ -14,8 +14,7 @@ if (!ACCOUNTS.length) {
 
 // ✅ 可扩展的接口配置
 const apiEndpoints = [
-  "https://raspy-disk-b126.dj2cubz.workers.dev/",
-  "https://round-breeze-41c8.dj2cubz.workers.dev/"
+"https://solitary-cake-6f69.dj2cubz.workers.dev/"
 ];
 
 const getRandomEndpoint = () => apiEndpoints[Math.floor(Math.random() * apiEndpoints.length)];
@@ -79,7 +78,7 @@ async function renewMachine(username, password, machineId) {
 
       const decoratedMsg = `🧾 *${username}* @ *机器 ${machineId}*\n${message}`;
       console.log("📬 接口返回:", message);
-      await sendTelegramMessage(decoratedMsg);
+      //await sendTelegramMessage(decoratedMsg);
 
       if (
         message.includes("请求体不是有效的 JSON") ||
@@ -90,12 +89,12 @@ async function renewMachine(username, password, machineId) {
     } catch (parseError) {
       const errorMsg = `⚠️ 返回内容非 JSON [${username}@${machineId}]:\n${responseText}`;
       console.warn(errorMsg);
-      await sendTelegramMessage(errorMsg);
+    //  await sendTelegramMessage(errorMsg);
     }
   } catch (err) {
     const errorMsg = `❌ 请求失败 [${username}@${machineId}]: ${err.message}`;
     console.error(errorMsg);
-    await sendTelegramMessage(errorMsg);
+  //  await sendTelegramMessage(errorMsg);
   }
   return true;
 }
