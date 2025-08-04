@@ -1,32 +1,55 @@
-name: 续费
+name: Download and Extract ZIP
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:  # 允许手动触发
   schedule:
-    - cron: "0 0 */4 * *"
+    - cron: '0 0 * * *'  # 每天 UTC 0:00 自动运行（可选）
 
 jobs:
-  renew:
+  download-extract:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4  # 检出仓库
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          node-version: '20'
+          python-version: '3.10'
 
-      - name: Install Dependencies
-        run: npm install 
+      - name: Install dependencies
+        run: pip install requests
 
-      - name: Run JS Renew Script
-        run: node raw_renew.js
-        env:
-          FC_USERNAME: ${{ secrets.FC_USERNAME }}
-          FC_PASSWORD: ${{ secrets.FC_PASSWORD }}
-          FC_PORT: ${{ secrets.FC_PORT }}
-          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN}}
-          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
-          FC_ACCOUNTS: ${{secrets.FC_ACCOUNTS}}
+      - name: Download and extract ZIP
+        run: |
+          python -c "
+          import requests
+          import zipfile
+          import os
+
+          url = 'https://zip.cm.edu.kg'  # 替换为真实 URL
+          headers = {'User-Agent': 'Mozilla/5.0'}
+
+          # 下载 ZIP
+          response = requests.get(url, headers=headers)
+          if response.status_code == 200:
+              with open('temp.zip', 'wb') as f:
+                  f.write(response.content)
+              
+              # 解压 ZIP
+              with zipfile.ZipFile('temp.zip', 'r') as zip_ref:
+                  zip_ref.extractall('.')
+              
+              # 删除临时 ZIP 文件
+              os.remove('temp.zip')
+              print('✅ ZIP 下载并解压完成！')
+          else:
+              print('❌ 下载失败，状态码:', response.status_code)
+          "
+
+      - name: Commit extracted files
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add .
+          git commit -m "Update extracted files" || echo "No changes to commit"
+          git push
